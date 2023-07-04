@@ -11,12 +11,12 @@ class Signup:
                 f" values (%(name)s, %(email)s, %(mobile)s, %(password)s, %(type)s)"
 
         params = {
-            'name': f'{self.user.name}',
-            'email': f'{self.user.email}',
-            'mobile': f'{self.user.mobile}',
-            'password': f'{self.user.password}',
-            'type': f'{self.user.type}'
+            'name': f'{self.user.name}' if self.user.name else None,
+            'email': f'{self.user.email}' if self.user.email else None,
+            'mobile': f'{self.user.mobile}' if self.user.mobile else None,
+            'password': f'{self.user.password}' if self.user.password else None,
+            'type': f'{self.user.type}' if self.user.type else None
         }
 
         self.db_helper.execute_query_with_params(query, params)
-        print("\nNew User have been created successfully\n")
+        print("\nNew User has been created successfully\n")

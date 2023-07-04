@@ -1,3 +1,5 @@
+from psycopg2.errorcodes import UNIQUE_VIOLATION
+from psycopg2 import errors
 from utils import *
 from signup import Signup
 
@@ -21,10 +23,20 @@ if __name__ == '__main__':
             print("You have chosen for Login")
             break
         elif choice == Options.SignUp.value:
-            print("You have chosen for Sign Up\n")
-            user = get_user_inputs(Actions.SignUp.value)
-            signup = Signup(user)
-            signup.create_new_user()
-            print("Please Login to Proceed further.")
+            while True:
+                print("You have chosen for Sign Up\n")
+                print("Please enter the following required details: \n")
+                user = get_user_inputs(Actions.SignUp.value)
+                signup = Signup(user)
+                try:
+                    signup.create_new_user()
+                except errors.lookup(UNIQUE_VIOLATION) as ex:
+                    print(f"\nGiven email_id {user.email} is already exists!! Please enter a different email_id !!!\n")
+                    continue
+                except Exception as ex:
+                    print(f"Unable to register the user due to: {ex}")
+                    raise ex
+                print("Please Login to Proceed further.\n")
+                break
         else:
             print("!!! You have entered an invalid choice !!! Please enter a valid choice. \n")

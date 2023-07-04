@@ -8,7 +8,6 @@ class DbHelper:
             cur.execute(query, params)
             self.conn.commit()
         except Exception as ex:
-            print(f"Execution is failed due to {ex}")
             raise ex
         finally:
             self.conn.close()
