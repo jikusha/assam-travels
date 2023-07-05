@@ -20,3 +20,16 @@ class Signup:
 
         self.db_helper.execute_query_with_params(query, params)
         print("\nNew User has been created successfully\n")
+
+    def update_user(self):
+        query = f"UPDATE dev.users set name = %(name)s, mobile = %(mobile)s" \
+                f" WHERE email = %(email)s"
+
+        params = {
+            'name': f'{self.user.name}',
+            'mobile': f'{self.user.mobile}',
+            'email': f'{self.user.email}'
+        }
+
+        self.db_helper.execute_query_with_params(query, params)
+        print("\nYour Profile has been updated successfully\n")

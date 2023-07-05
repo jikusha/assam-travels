@@ -18,17 +18,18 @@ if __name__ == '__main__':
         try:
             choice = int(input("Please Enter your choice: "))
         except Exception as ex:
-            print(f"!!!!! Could not proceed with the choice due to invalid choice format !!!!!!"
+            print(f"\n !!!!! Could not proceed with the choice due to invalid choice format !!!!!!"
                   f" Please enter a valid choice. \n")
             continue
 
         if choice == Options.Login.value:
             while True:
-                print("You have chosen for Login\n")
+                print("\nYou have chosen for Login\n")
                 credential = get_user_inputs(Actions.Login.value)
                 login = Login(credential)
                 try:
                     user = login.get_user()
+                    break
                 except UserNotFoundException as ex:
                     print("\n!!!! Given email is not found !!!\n")
                     continue
@@ -38,7 +39,39 @@ if __name__ == '__main__':
                 except Exception as ex:
                     raise ex
 
-                print("\n!!!!! You are successfully logged in !!!!\n")
+            if user.type == 'O':
+                print(f"\n!!!!! Hello, {user.name}. You are successfully logged in as: Operator !!!!\n")
+            else:
+                print(f"\n!!!!! Hello, {user.name}. You are successfully logged in as: Customer !!!!\n")
+
+            while True:
+                print("Please select an option from below: \n")
+                print(f"Press {Options.ViewProfile.value} to view your profile")
+                print(f"Press {Options.EditProfile.value} to edit your profile")
+                print(f"Press {Options.Logout.value} for Logout")
+                print()
+
+                try:
+                    choice = int(input("Please Enter your choice: "))
+                except Exception as ex:
+                    print(f"\n !!!!! Could not proceed with the choice due to invalid choice format !!!!!!"
+                          f" Please enter a valid choice. \n")
+                    continue
+
+                if choice == Options.Logout.value:
+                    print("!!!! You have been Logged Out !!!!")
+                    break
+                elif choice == Options.ViewProfile.value:
+                    show_profile_details(user)
+                    continue
+                elif choice == Options.EditProfile.value:
+                    new_user = get_user_inputs(Actions.EditProfile.value)
+                    user.name = new_user.name
+                    user.mobile = new_user.mobile
+                    signup = Signup(user)
+                    signup.update_user()
+                    continue
+
 
         elif choice == Options.SignUp.value:
             while True:

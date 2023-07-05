@@ -1,10 +1,10 @@
 class User:
     def __init__(self, **kwargs):
-        self.name = kwargs['name']
-        self.mobile = kwargs['mobile']
-        self.email = kwargs['email']
-        self.type = kwargs['type']
-        self.password = kwargs['password']
+        self.name = kwargs['name'] if 'name' in kwargs else None
+        self.mobile = kwargs['mobile'] if 'mobile' in kwargs else None
+        self.email = kwargs['email'] if 'email' in kwargs else None
+        self.type = kwargs['type'] if 'type' in kwargs else None
+        self.password = kwargs['password'] if 'password' in kwargs else None
 
 class Bus:
     def __init__(self, **kwargs):
