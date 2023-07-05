@@ -13,3 +13,8 @@ class Bus:
         self.capacity = kwargs['capacity']
         self.boarding_at = kwargs['boarding_at']
         self.destination = kwargs['destination']
+
+class Credential:
+    def __init__(self, **kwargs):
+        self.email = kwargs['email']
+        self.password = kwargs['password']

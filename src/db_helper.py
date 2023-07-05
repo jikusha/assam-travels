@@ -10,4 +10,20 @@ class DbHelper:
         except Exception as ex:
             raise ex
         finally:
-            self.conn.close()
+            close_connection(cur, self.conn)
+
+    def get_user_by_email(self, query, params):
+        inputs = {}
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query, params)
+            row =  cur.fetchone()
+            return row
+        except Exception as ex:
+            raise ex
+        finally:
+            close_connection(cur, self.conn)
+
+def close_connection(cur, conn):
+    cur.close()
+    conn.close()
